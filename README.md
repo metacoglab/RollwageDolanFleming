@@ -9,9 +9,9 @@ Analysis scripts of the questionnaire data (factor analysis), behavioral data an
 
 The script Factor_Analysis.R will reproduce the factor analysis of questionnaire data and the regressions between the 3 factorscores (Figure 1). 
 
-The script Behavioral_Analysis.m will reproduce the regression analysis predicitng the questionnaire factorscores based on metacognitive variables (Figure 3). 
+The script Behavioral_Analysis.m will reproduce the regression analysis predicting the questionnaire factorscores based on metacognitive variables (Figure 3). 
 
-The script Computational_model_fitting.R will fit the three computational models to the data, and the models are specified in the text files Temporal_weighting.stan, Choice_weighting.stan and Choice_Bias.stan. 
+The script Model_fitting.R will fit the three computational models to the data, and the models are specified in the text files Temporal_weighting.stan, Choice_weighting.stan and Choice_Bias.stan. 
 
 The script Model_comparison.m will conduct the model comparison of the three computatiounal models (Figure 4A).
 
