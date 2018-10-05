@@ -5,12 +5,16 @@ rm(list=ls())
 library(ggplot2) 
 library(psych)
 library(nFactors)
+library(R.matlab)
+library("gridExtra")
+
+
 options(scipen = 999)
 
 # set directory 
 setwd("D:/Radicalism_Change_of_Mind/github/")
 #loading data
-mdata = readMat("CombinedData_Gorilla.mat")
+mdata = readMat("QuestionnaireData.mat")
 
 # adding column names
 mydata=mdata$Questionnaire.extract
@@ -28,7 +32,7 @@ CNG=nCng(cor(mydata[1:344,]), cor=TRUE, model="factors", details=TRUE)
 number_factors=CNG$nFactors 
 
 #run the factor analysis
-fa.results_Prestudy= fa(mydata[1:344,], nfactors = number_factors,rotate = "oblimin", fm="ml")
+fa.results= fa(mydata[1:344,], nfactors = number_factors,rotate = "oblimin", fm="ml")
 
 # extract factor loadings
 loadings <- abs(fa.results$loadings)
@@ -69,7 +73,7 @@ grid.arrange(a,b,c, ncol=1,nrow=3)
 
 
 #extract factor scores 
-factorscores=fa.results_Prestudy$scores
+factorscores=fa.results$scores
 factorscores_f1=scale(factorscores[1:344,1])
 factorscores_f2=scale(factorscores[1:344,2])
 factorscores_f3=scale(factorscores[1:344,3])
@@ -80,7 +84,7 @@ fit<-rlm(factorscores_f2 ~ factorscores_f1 + I(factorscores_f1^2))
 fit<-rlm(factorscores_f3 ~ factorscores_f1 + I(factorscores_f1^2))
 fit<-rlm(factorscores_f3 ~ factorscores_f2 )
 
-# check whether rekation between political orientation and dogmatic intolerance is linear or quadratic
+# check whether relation between political orientation and dogmatic intolerance is linear or quadratic
 fit<-rlm(factorscores_f2 ~ factorscores_f1+ I(factorscores_f1^2))
 BIC(fit)
 summary(fit)
@@ -105,6 +109,7 @@ fit<-rlm(factorscores_f3 ~ factorscores_f2)
 summary(fit)
 
 
+
 # Plot relationship between political orientation and dogmatic intolerance (Figure 1B)
 df<-data.frame(x=factorscores_f1[1:344],y=factorscores_f2[1:344])
 p<-ggplot(df, aes(x=x, y=y)) + geom_point(shape=19,color='darkblue', size = 1.5) + theme_classic(base_size = 35) + 
@@ -112,7 +117,6 @@ p<-ggplot(df, aes(x=x, y=y)) + geom_point(shape=19,color='darkblue', size = 1.5)
   xlab("left -political orientation- right")+ 
   ylab("dogmatic intolerance") +theme(axis.text=element_text(size=38), axis.title=element_text(size=38))
 p
-
 
 # Plot relationship between political orientation and authoritarianism (Figure 1C)
 df<-data.frame(x=factorscores_f1[1:344],y=factorscores_f3[1:344])
