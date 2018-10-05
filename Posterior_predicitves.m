@@ -1,6 +1,33 @@
 clear all
+%% Load the model parameters of the Choice Bias model
+uiopen('D:\Radicalism_Change_of_Mind\github\ChoiceBias.csv',1)
+uiopen('D:\Radicalism_Change_of_Mind\github\ReportNoise_ChoiceBias.csv',1)
 
-load('Data_Model_Parameter_ChoiceBias.mat')
+%% Define variables
+
+ParameterScalingPre=ChoiceBias.ParameterScalingPre;
+ParameterScalingPost=ChoiceBias.ParameterScalingPost;
+ParameterW=ChoiceBias.ParameterW;
+ParameterM=ChoiceBias.ParameterM;
+
+STDScalingPre=ChoiceBias.STDScalingPre;
+STDScalingPost=ChoiceBias.STDScalingPost;
+STDM=ChoiceBias.STDM;
+STDW=ChoiceBias.STDW;
+
+Radicalism=ChoiceBias.Radicalism;
+
+MEAN_confidence_correct=ChoiceBias.MEAN_confidence_correct;
+MEAN_confidence_incorrect=ChoiceBias.MEAN_confidence_incorrect;
+MEAN_confidence_correct_low=ChoiceBias.MEAN_confidence_correct_low;
+MEAN_confidence_incorrect_low=ChoiceBias.MEAN_confidence_incorrect_low;
+MEAN_confidence_correct_high=ChoiceBias.MEAN_confidence_correct_high;
+MEAN_confidence_incorrect_high=ChoiceBias.MEAN_confidence_incorrect_high;
+
+ReportNoise1=ReportNoiseChoiceBias.ReportNoise1;
+ReportNoise2=ReportNoiseChoiceBias.ReportNoise2;
+
+%% simulate posterior predictives
 
 for subject=1:length(ParameterScalingPre) %% loop over all subjects 
     
