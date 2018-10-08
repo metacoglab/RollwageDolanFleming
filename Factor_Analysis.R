@@ -6,13 +6,13 @@ library(ggplot2)
 library(psych)
 library(nFactors)
 library(R.matlab)
-library("gridExtra")
-
+library(gridExtra)
+library(GPArotation)
 
 options(scipen = 999)
 
 # set directory 
-setwd("D:/Radicalism_Change_of_Mind/github/")
+setwd("~/Dropbox/InPrep/Politics/Data/")
 #loading data
 mdata = readMat("QuestionnaireData.mat")
 
@@ -26,17 +26,15 @@ for (i in 1:length(mdata$Items.labels))
 }
 colnames(mydata)=heading
 
-
-# run the Cattell-Nelson-Gorsuch test to determine the number of factors
+# run the Cattell-Nelson-Gorsuch test to determine the number of factors to retain
 CNG=nCng(cor(mydata[1:344,]), cor=TRUE, model="factors", details=TRUE)
 number_factors=CNG$nFactors 
 
-#run the factor analysis
+#run the factor analysis on subjects from first experiment 
 fa.results= fa(mydata[1:344,], nfactors = number_factors,rotate = "oblimin", fm="ml")
 
 # extract factor loadings
 loadings <- abs(fa.results$loadings)
-
 
 # PLot the factor loadings (Figure 1A)
 loadingsplot<- 0
@@ -65,7 +63,7 @@ b<-ggplot(loadingsplot[2], aes(x = loadingsplot$x, y = loadingsplot$loadings...2
 c<-ggplot(loadingsplot[3], aes(x = loadingsplot$x, y = loadingsplot$loadings...3, fill=Questionnaires)) + 
   geom_bar(stat = "identity") + 
   scale_fill_manual(values=c("#999999", "#E69F00","#56B4E9", "#009E73","#F0E442","#0072B2","#D55E00", "#CC79A7"), name="Questionnaires", breaks=c("Self report", "Voting", "SECS", "RWA", "LWA", "Political Issues", "Belief Superiority", "Dog"),labels=c("Political Orientation", "Voting", "SECS", "RWA", "LWA", "Political Issues", "Belief Superiority", "Dogmatism"))+
-  labs(title="Factor", x="Questions", y = "Loadings") +  theme_classic(base_size = 18) +
+  labs(title="Factor 3: Authoritarianism", x="Questions", y = "Loadings") +  theme_classic(base_size = 18) +
   theme(axis.ticks = element_blank() ,axis.text.x = element_blank(),axis.line = element_blank(),legend.title=element_blank())+
   expand_limits(y=c(-.9,.9))+theme(axis.text=element_text(size=18),axis.title=element_text(size=18))
 
@@ -79,10 +77,6 @@ factorscores_f2=scale(factorscores[1:344,2])
 factorscores_f3=scale(factorscores[1:344,3])
 
 #conduct the regressions between factorscores
-
-fit<-rlm(factorscores_f2 ~ factorscores_f1 + I(factorscores_f1^2))
-fit<-rlm(factorscores_f3 ~ factorscores_f1 + I(factorscores_f1^2))
-fit<-rlm(factorscores_f3 ~ factorscores_f2 )
 
 # check whether relation between political orientation and dogmatic intolerance is linear or quadratic
 fit<-rlm(factorscores_f2 ~ factorscores_f1+ I(factorscores_f1^2))
@@ -105,9 +99,10 @@ summary(fit)
 fit<-rlm(factorscores_f3 ~  I(factorscores_f1^2))
 BIC(fit)
 summary(fit)
+
+# linear regression between dogmatic intolerance and authoritarianism
 fit<-rlm(factorscores_f3 ~ factorscores_f2)
 summary(fit)
-
 
 
 # Plot relationship between political orientation and dogmatic intolerance (Figure 1B)

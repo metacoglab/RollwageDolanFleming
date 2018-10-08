@@ -40,7 +40,7 @@ for subject=1:length(ParameterScalingPre) %% loop over all subjects
         M=normrnd(ParameterM(subject),STDM(subject));
         W=normrnd(ParameterW(subject),STDW(subject));
 
-        %check that W is not 1 or 0 (which cause computational problems) 
+        %check that W is not 1 or 0 (to avoid computational problems) 
         if W>.99
             W=.99;
         elseif W<0.01
@@ -91,7 +91,6 @@ for subject=1:length(ParameterScalingPre) %% loop over all subjects
         loglikdir_bias(Xpre_all<M)=log((1-W)/W);      
         loglikdir_bias(Xpre_all<M)=-loglikdir_bias(Xpre_all<M);
 
-        
         % calculate the final log-odds correct
         loglikC_pre=loglikdir_pre+loglikdir_bias;
         loglikC_post_low=loglikdir_pre2+loglikdir_post_low+loglikdir_bias;
@@ -114,7 +113,6 @@ for subject=1:length(ParameterScalingPre) %% loop over all subjects
             confidence_post_high_report=normrnd(confidence_post_high, ReportNoise2);
         end
         
-      
         % make sure that confidence is bounded by 0 and 1
         confidence_pre_report(confidence_pre_report>1)=1;
         confidence_pre_report(confidence_pre_report<0)=0;

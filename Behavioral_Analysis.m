@@ -1,12 +1,13 @@
 clear all
 
 %% Load the data set
-cd('D:\Radicalism_Change_of_Mind\github') %change this path to the directory of the data
+cwd = pwd;
+cd('~/Dropbox/InPrep/Politics/Data') %change this path to the directory of the data
 load(['Data_Behavioral_Questionnaire_combined.mat'])
+cd(cwd)
 
 %% Define exclusion criteria 
 index_complete=find(Performance_total<.85 & Performance_total>.6 &variability_confidenceratings<.9 & Type2_RT>850);
-
 
 %% Exclude people based on behavioral criteria
 ParticipantID=ParticipantID(index_complete);
@@ -62,9 +63,9 @@ Radicalism=Dogmatism+Authoritarianism;
 
 %% Conduct the multiple regressions predicting factor scores based on task vairbales (Figure 3)
 
-
-%Rgression for dogmatic intoelrance (Figure 3A)
-
+% Regression for dogmatic intolerance (Figure 3A)
+% Predictors: [1)Gender 2)Education 3)Age 4)Evidence_strength 5)Perf_high 6)Mean_conf
+% 7)Perf 8)CEI 9)DEI 10)meta-d']
 fit_lm=fitlm([zscore(Gender(Experiment==1)) zscore(Education(Experiment==1)) zscore(Age(Experiment==1)) zscore(Evidence_strength(Experiment==1))' zscore(Performance_staircase_high_evidence(Experiment==1))' zscore(MEAN_confidence(Experiment==1))'  zscore(D_prime_full(Experiment==1))'  zscore(integration_confirmatory_evidence(Experiment==1))' zscore(integration_disconfirmatory_evidence(Experiment==1))' zscore(Meta_dprime(Experiment==1))'], zscore(Dogmatism(Experiment==1)),'linear','RobustOpts','on')
 beta_all=fit_lm.Coefficients.Estimate
 stderr_all=fit_lm.Coefficients.SE
@@ -99,7 +100,7 @@ fix_xticklabels(gca,2,{'FontSize',16,'FontName','Arial','FontWeight','bold'});
 hold off
 
 
-%Regression for authoritarianism (Figure 3B)
+% Regression for authoritarianism (Figure 3B)
 fit_lm=fitlm([zscore(Gender(Experiment==1)) zscore(Education(Experiment==1)) zscore(Age(Experiment==1)) zscore(Evidence_strength(Experiment==1))' zscore(Performance_staircase_high_evidence(Experiment==1))' zscore(MEAN_confidence(Experiment==1))'  zscore(D_prime_full(Experiment==1))'  zscore(integration_confirmatory_evidence(Experiment==1))' zscore(integration_disconfirmatory_evidence(Experiment==1))' zscore(Meta_dprime(Experiment==1))'], zscore(Authoritarianism(Experiment==1)),'linear','RobustOpts','on')
 beta_all=fit_lm.Coefficients.Estimate
 stderr_all=fit_lm.Coefficients.SE
@@ -142,7 +143,6 @@ stderr_all=fit_lm.Coefficients.SE
 fit_lm=fitlm([zscore(Gender(Experiment==2)) zscore(Education(Experiment==2)) zscore(Age(Experiment==2)) zscore(Evidence_strength(Experiment==2))' zscore(Performance_staircase_high_evidence(Experiment==2))' zscore(MEAN_confidence(Experiment==2))'  zscore(D_prime_full(Experiment==2))'  zscore(integration_confirmatory_evidence(Experiment==2))' zscore(integration_disconfirmatory_evidence(Experiment==2))' zscore(Meta_dprime(Experiment==2))'], zscore(PoliticalBelief(Experiment==2)),'linear','RobustOpts','on')
 beta_all_rep=fit_lm.Coefficients.Estimate
 stderr_all_rep=fit_lm.Coefficients.SE
-
 
 figure(3)
 x=1:4:32
@@ -204,7 +204,6 @@ ylim([-.35 .35])
 xlim([0 32])
 fix_xticklabels(gca,2,{'FontSize',16,'FontName','Arial','FontWeight','bold'});
 hold off
-
 
 
 %% Predicting post-decision evidence sensitivty with meta-d' (controlling for other task variables)

@@ -1,10 +1,11 @@
 clear all
 
 %% Load the model parameter
-uiopen('D:\Radicalism_Change_of_Mind\github\TemporalWeighting.csv',1)
-uiopen('D:\Radicalism_Change_of_Mind\github\ChoiceBias.csv',1)
-uiopen('D:\Radicalism_Change_of_Mind\github\Choice_Weighting.csv',1)
-
+% (this will open CSV which can be imported by pressing "import
+% selection")
+uiopen('~/Dropbox/InPrep/Politics/Data/Temporal_Weighting.csv',1)
+uiopen('~/Dropbox/InPrep/Politics/Data/ChoiceBias.csv',1)
+uiopen('~/Dropbox/InPrep/Politics/Data/Choice_Weighting.csv',1)
 
 %% Create variables 
 Temporal_Weighting_ScalingPre=TemporalWeighting.ParameterScalingPre;
@@ -22,7 +23,6 @@ Choice_Weighting_Confirmatory=ChoiceWeighting.ParameterConfirmatory;
 Choice_Weighting_Disconfirmatory=ChoiceWeighting.ParameterDisconfirmatory;
 
 Radicalism=ChoiceBias.Radicalism;
-
 
 %% Evaluate models
 
