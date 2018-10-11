@@ -21,7 +21,7 @@ The script Posterior_Predictives.m reproduces the posterior predicitives of the 
 
 This code is being released with a permissive open-source license. You should feel free to use or adapt the utility code as long as you follow the terms of the license, which are enumerated below. If you make use of or build on the computational models or behavioural/neuroimaging analyses, we would appreciate that you cite the paper.
 
-Copyright (c) 2017, Stephen Fleming
+Copyright (c) 2018, Stephen Fleming
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
