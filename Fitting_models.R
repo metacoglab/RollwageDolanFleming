@@ -14,7 +14,7 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 # set directory 
-setwd("D:/Radicalism_Change_of_Mind/github")
+setwd("D:/Radicalism_Change_of_Mind/github/data")
 #loading data
 mdata = readMat("data_input_Modelling.mat")
 # specify data
@@ -67,9 +67,10 @@ dataInputStduy2 <- list(N=180,
                         RT=mdata$RT[,(NumberSubjects+1):798]
 )
 
+setwd("D:/Radicalism_Change_of_Mind/github")
 
 # Load the temporal weighting model
-Temporal_Weighting_model <- stan_model(file = "General_weighting_prior_bias.stan")
+Temporal_Weighting_model <- stan_model(file = "Temporal_Weighting.stan")
 
 # Fit the temporal weighting model to Study 2
 Fit_temporal_weighting_1 <-vb(Temporal_Weighting_model, data=dataInputStduy1, pars = c("Xpre", "Xpost", "P_all_combined"),include = FALSE,output_samples=1000, seed = sample.int(.Machine$integer.max, 1),elbo_samples=500, tol_rel_obj=0.0001, iter=200000)
@@ -125,7 +126,7 @@ write.table(Model_comparison, file="D:/Radicalism_Change_of_Mind/github/Temporal
 
 
 ######### Load the choice Bias model
-Choice_Bias_model <- stan_model(file = "Choice_bias_prior_bias.stan")
+Choice_Bias_model <- stan_model(file = "Choice_Bias.stan")
 
 # Fit Choice Bias model to Study 2
 Fit_Chocie_Bias_1 <-vb(Choice_Bias_model, data=dataInputStduy1, pars = c("Xpre", "Xpost", "P_all_combined"),include = FALSE,output_samples=1000, seed = sample.int(.Machine$integer.max, 1),elbo_samples=500, tol_rel_obj=0.0001, iter=200000)
@@ -174,7 +175,7 @@ write.table(Model_comparison, file="D:/Radicalism_Change_of_Mind/github/Choice_b
 
 ##################Load Choice wehighting model 
 
-Choice_Weighting_Model <- stan_model(file = "Choice_weighting_prior_bias.stan")
+Choice_Weighting_Model <- stan_model(file = "Choice_Weighting.stan")
 
 # Fit Choice weighting to Study 2
 Fit_Chocie_Weighting_1 <-vb(Choice_Weighting_Model, data=dataInputStduy1, pars = c("Xpre", "Xpost", "P_all_combined"),include = FALSE,output_samples=1000, seed = sample.int(.Machine$integer.max, 1),elbo_samples=500, tol_rel_obj=0.0001, iter=200000)
