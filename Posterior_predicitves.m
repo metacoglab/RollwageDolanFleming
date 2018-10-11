@@ -1,7 +1,9 @@
 clear all
 %% Load the model parameters of the Choice Bias model
-uiopen('D:\Radicalism_Change_of_Mind\github\ChoiceBias.csv',1)
-uiopen('D:\Radicalism_Change_of_Mind\github\ReportNoise_ChoiceBias.csv',1)
+% (this will open CSV which can be imported by pressing "import
+% selection")
+uiopen('D:\Radicalism_Change_of_Mind\github\data\ChoiceBias.csv',1)
+uiopen('D:\Radicalism_Change_of_Mind\github\data\ReportNoise_ChoiceBias.csv',1)
 
 %% Define variables
 
@@ -154,65 +156,69 @@ cuttoff=round(length(Radicalism)*percent_extreme)
 Index_extreme=I((end-cuttoff):end)
 Index_moderate=I(1:(end-cuttoff-1))
 
+t_value_moderate=tinv(.975, length(Index_moderate));
+t_value_extreme=tinv(.975, length(Index_extreme));
 
 % calculate the (empirical) group mean and 95% confidence interval for mean confidence of
 % correct and incorrect trials for different post-decision evidence
 % strengths
 y_correct2_extreme=[mean(MEAN_confidence_correct(Index_extreme)) mean(MEAN_confidence_correct_low(Index_extreme)) mean(MEAN_confidence_correct_high(Index_extreme))];
-std_y_correct2_extreme=1.97*[ std(MEAN_confidence_correct(Index_extreme)) std(MEAN_confidence_correct_low(Index_extreme)) std(MEAN_confidence_correct_high(Index_extreme))]./sqrt(length(MEAN_confidence_correct(Index_extreme)));
+std_y_correct2_extreme=t_value_extreme*[ std(MEAN_confidence_correct(Index_extreme)) std(MEAN_confidence_correct_low(Index_extreme)) std(MEAN_confidence_correct_high(Index_extreme))]./sqrt(length(MEAN_confidence_correct(Index_extreme)));
 y_incorrect2_extreme=[mean(MEAN_confidence_incorrect(Index_extreme)) mean(MEAN_confidence_incorrect_low(Index_extreme)) mean(MEAN_confidence_incorrect_high(Index_extreme))];
-std_y_incorrect2_extreme=1.97*[std(MEAN_confidence_incorrect(Index_extreme)) std(MEAN_confidence_incorrect_low(Index_extreme)) std(MEAN_confidence_incorrect_high(Index_extreme))]./sqrt(length(MEAN_confidence_incorrect(Index_extreme)));
+std_y_incorrect2_extreme=t_value_extreme*[std(MEAN_confidence_incorrect(Index_extreme)) std(MEAN_confidence_incorrect_low(Index_extreme)) std(MEAN_confidence_incorrect_high(Index_extreme))]./sqrt(length(MEAN_confidence_incorrect(Index_extreme)));
 
 y_correct2_moderate=[mean(MEAN_confidence_correct(Index_moderate)) mean(MEAN_confidence_correct_low(Index_moderate)) mean(MEAN_confidence_correct_high(Index_moderate))];
-std_y_correct2_moderate=1.96*[ std(MEAN_confidence_correct(Index_moderate)) std(MEAN_confidence_correct_low(Index_moderate)) std(MEAN_confidence_correct_high(Index_moderate))]./sqrt(length(MEAN_confidence_correct(Index_moderate)));
+std_y_correct2_moderate=t_value_moderate*[ std(MEAN_confidence_correct(Index_moderate)) std(MEAN_confidence_correct_low(Index_moderate)) std(MEAN_confidence_correct_high(Index_moderate))]./sqrt(length(MEAN_confidence_correct(Index_moderate)));
 y_incorrect2_moderate=[mean(MEAN_confidence_incorrect(Index_moderate)) mean(MEAN_confidence_incorrect_low(Index_moderate)) mean(MEAN_confidence_incorrect_high(Index_moderate))];
-std_y_incorrect2_moderate=1.96*[std(MEAN_confidence_incorrect(Index_moderate)) std(MEAN_confidence_incorrect_low(Index_moderate)) std(MEAN_confidence_incorrect_high(Index_moderate))]./sqrt(length(MEAN_confidence_incorrect(Index_moderate)));
+std_y_incorrect2_moderate=t_value_moderate*[std(MEAN_confidence_incorrect(Index_moderate)) std(MEAN_confidence_incorrect_low(Index_moderate)) std(MEAN_confidence_incorrect_high(Index_moderate))]./sqrt(length(MEAN_confidence_incorrect(Index_moderate)));
 
 
 % calculate the model predicitons of group mean and 95% confidence interval for mean confidence of
 % correct and incorrect trials for different post-decision evidence
 % strengths
+
+
 Simulation_Average_Conf_Correct_extreme=mean(pred_Average_correct(Index_extreme))
-Simulation_Std_Conf_Correct_extreme=1.97*(std(pred_Average_correct(Index_extreme))/sqrt(length(Index_extreme)))
+Simulation_Std_Conf_Correct_extreme=t_value_extreme*(std(pred_Average_correct(Index_extreme))/sqrt(length(Index_extreme)))
 Simulation_Average_Conf_Incorrect_extreme=mean(pred_Average_incorrect(Index_extreme))
-Simulation_Std_Conf_Incorrect_extreme=1.97*(std(pred_Average_incorrect(Index_extreme))/sqrt(length(Index_extreme)))
+Simulation_Std_Conf_Incorrect_extreme=t_value_extreme*(std(pred_Average_incorrect(Index_extreme))/sqrt(length(Index_extreme)))
 
 
 Simulation_Average_Low_Correct_extreme=mean(pred_Average_Low_correct(Index_extreme))
-Simulation_Std_Low_Correct_extreme=1.97*(std(pred_Average_Low_correct(Index_extreme))/sqrt(length(Index_extreme)))
+Simulation_Std_Low_Correct_extreme=t_value_extreme*(std(pred_Average_Low_correct(Index_extreme))/sqrt(length(Index_extreme)))
 Simulation_Average_Low_Incorrect_extreme=mean(pred_Average_Low_incorrect(Index_extreme))
-Simulation_Std_Low_Incorrect_extreme=1.97*(std(pred_Average_Low_incorrect(Index_extreme))/sqrt(length(Index_extreme)))
+Simulation_Std_Low_Incorrect_extreme=t_value_extreme*(std(pred_Average_Low_incorrect(Index_extreme))/sqrt(length(Index_extreme)))
 
 
 Simulation_Average_High_Correct_extreme=mean(pred_Average_high_correct(Index_extreme))
-Simulation_Std_High_Correct_extreme=1.97*(std(pred_Average_high_correct(Index_extreme))/sqrt(length(Index_extreme)))
+Simulation_Std_High_Correct_extreme=t_value_extreme*(std(pred_Average_high_correct(Index_extreme))/sqrt(length(Index_extreme)))
 Simulation_Average_High_Incorrect_extreme=mean(pred_Average_high_incorrect(Index_extreme))
-Simulation_Std_High_Incorrect_extreme=1.97*(std(pred_Average_high_incorrect(Index_extreme))/sqrt(length(Index_extreme)))
+Simulation_Std_High_Incorrect_extreme=t_value_extreme*(std(pred_Average_high_incorrect(Index_extreme))/sqrt(length(Index_extreme)))
 
 Simulation_Average_Conf_Correct_moderates=mean(pred_Average_correct(Index_moderate))
-Simulation_Std_Conf_Correct_moderates=1.96*(std(pred_Average_correct(Index_moderate))/sqrt(length(Index_moderate)))
+Simulation_Std_Conf_Correct_moderates=t_value_moderate*(std(pred_Average_correct(Index_moderate))/sqrt(length(Index_moderate)))
 Simulation_Average_Conf_Incorrect_moderates=mean(pred_Average_incorrect(Index_moderate))
-Simulation_Std_Conf_Incorrect_moderates=1.96*(std(pred_Average_incorrect(Index_moderate))/sqrt(length(Index_moderate)))
+Simulation_Std_Conf_Incorrect_moderates=t_value_moderate*(std(pred_Average_incorrect(Index_moderate))/sqrt(length(Index_moderate)))
 
 Simulation_Average_Low_Correct_moderates=mean(pred_Average_Low_correct(Index_moderate))
-Simulation_Std_Low_Correct_moderates=1.96*(std(pred_Average_Low_correct(Index_moderate))/sqrt(length(Index_moderate)))
+Simulation_Std_Low_Correct_moderates=t_value_moderate*(std(pred_Average_Low_correct(Index_moderate))/sqrt(length(Index_moderate)))
 Simulation_Average_Low_Incorrect_moderates=mean(pred_Average_Low_incorrect(Index_moderate))
-Simulation_Std_Low_Incorrect_moderates=1.96*(std(pred_Average_Low_incorrect(Index_moderate))/sqrt(length(Index_moderate)))
+Simulation_Std_Low_Incorrect_moderates=t_value_moderate*(std(pred_Average_Low_incorrect(Index_moderate))/sqrt(length(Index_moderate)))
 
 Simulation_Average_High_Correct_moderates=mean(pred_Average_high_correct(Index_moderate))
-Simulation_Std_High_Correct_moderates=1.96*(std(pred_Average_high_correct(Index_moderate))/sqrt(length(Index_moderate)))
+Simulation_Std_High_Correct_moderates=t_value_moderate*(std(pred_Average_high_correct(Index_moderate))/sqrt(length(Index_moderate)))
 Simulation_Average_High_Incorrect_moderates=mean(pred_Average_high_incorrect(Index_moderate))
-Simulation_Std_High_Incorrect_moderates=1.96*(std(pred_Average_high_incorrect(Index_moderate))/sqrt(length(Index_moderate)))
+Simulation_Std_High_Incorrect_moderates=t_value_moderate*(std(pred_Average_high_incorrect(Index_moderate))/sqrt(length(Index_moderate)))
 
 correct_model_moderates=[Simulation_Average_Conf_Correct_moderates Simulation_Average_Low_Correct_moderates Simulation_Average_High_Correct_moderates];
-std_correct_model_moderates=[Simulation_Std_Low_Correct_moderates Simulation_Std_Low_Correct_moderates Simulation_Std_High_Correct_moderates];
+std_correct_model_moderates=[Simulation_Std_Conf_Correct_moderates Simulation_Std_Low_Correct_moderates Simulation_Std_High_Correct_moderates];
 correct_model_radicals=  [Simulation_Average_Conf_Correct_extreme Simulation_Average_Low_Correct_extreme Simulation_Average_High_Correct_extreme];
 std_correct_model_radicals=[Simulation_Std_Conf_Correct_extreme Simulation_Std_Low_Correct_extreme Simulation_Std_High_Correct_extreme];
 
 incorrect_model_moderates=[Simulation_Average_Conf_Incorrect_moderates Simulation_Average_Low_Incorrect_moderates Simulation_Average_High_Incorrect_moderates];
-std_incorrect_model_moderates=[Simulation_Std_Conf_Correct_moderates Simulation_Std_Low_Correct_moderates Simulation_Std_High_Correct_moderates];
+std_incorrect_model_moderates=[Simulation_Std_Conf_Incorrect_moderates Simulation_Std_Low_Incorrect_moderates Simulation_Std_High_Incorrect_moderates];
 incorrect_model_radicals= [Simulation_Average_Conf_Incorrect_extreme Simulation_Average_Low_Incorrect_extreme Simulation_Average_High_Incorrect_extreme];
-std_incorrect_model_radicals=[Simulation_Std_Conf_Incorrect_moderates Simulation_Std_Low_Incorrect_moderates Simulation_Std_High_Incorrect_moderates];
+std_incorrect_model_radicals=[Simulation_Std_Conf_Incorrect_extreme Simulation_Std_Low_Incorrect_extreme Simulation_Std_High_Incorrect_extreme];
 
 
 %% Plot Figure 4B
@@ -238,5 +244,4 @@ ylabel('Confidence rating')
 g=legend([h1 h2 h3 h4], {'Radicals Correct', 'Moderates Correct', 'Radicals Incorrect', 'Moderates Incorrect'},'Location','SouthWest')
 set(g,'Box','off')
 fix_xticklabels(gca,2,{'FontSize', 15,'FontName','Arial','FontWeight','bold',});
-set(findall(gca, 'Type', 'Line'),'LineWidth',2)
-hold off
+export_fig('Figure_4B',  '-pdf','-nocrop', '-painters', '-transparent', [gca])

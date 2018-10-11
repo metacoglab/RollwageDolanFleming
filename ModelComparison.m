@@ -1,11 +1,10 @@
 clear all
 
 %% Load the model parameter
-% (this will open CSV which can be imported by pressing "import
-% selection")
-uiopen('~/Dropbox/InPrep/Politics/Data/Temporal_Weighting.csv',1)
-uiopen('~/Dropbox/InPrep/Politics/Data/ChoiceBias.csv',1)
-uiopen('~/Dropbox/InPrep/Politics/Data/Choice_Weighting.csv',1)
+uiopen('D:\Radicalism_Change_of_Mind\github\data\Temporal_Weighting.csv',1)
+uiopen('D:\Radicalism_Change_of_Mind\github\data\ChoiceBias.csv',1)
+uiopen('D:\Radicalism_Change_of_Mind\github\data\Choice_Weighting.csv',1)
+
 
 %% Create variables 
 Temporal_Weighting_ScalingPre=TemporalWeighting.ParameterScalingPre;
@@ -23,6 +22,7 @@ Choice_Weighting_Confirmatory=ChoiceWeighting.ParameterConfirmatory;
 Choice_Weighting_Disconfirmatory=ChoiceWeighting.ParameterDisconfirmatory;
 
 Radicalism=ChoiceBias.Radicalism;
+
 
 %% Evaluate models
 
@@ -96,6 +96,6 @@ set(g,'Box','off')
 ylim([0 11])
 xlim([0 10])
 
-set(gca, 'FontSize', 14,'FontName','Arial','FontWeight','bold','box','off', 'XTick',[1:3:9]+.5, 'XTickLabel',{'Temporal Weighting','Choice bias','Choice Weighting'},  'YTick',[2 4 6 8 10 12], 'YTickLabel',{'0','2','4','6','8','10'})
-fix_xticklabels(gca,2,{'FontSize', 14,'FontName','Arial','FontWeight','bold',});
-export_fig('Figure_3B',  '-pdf','-nocrop', '-painters', '-transparent', [gca])
+set(gca, 'FontSize', 15,'FontName','Arial','FontWeight','bold','box','off', 'XTick',[1:3:9]+.5, 'XTickLabel',{'Temporal Weighting','Choice bias','Choice Weighting'},  'YTick',[2 4 6 8 10 12], 'YTickLabel',{'0','2','4','6','8','10'})
+fix_xticklabels(gca,2,{'FontSize', 15,'FontName','Arial','FontWeight','bold',});
+export_fig('Figure_4A',  '-pdf','-nocrop', '-painters', '-transparent', [gca])
